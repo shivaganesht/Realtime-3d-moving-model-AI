@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Build NEXUS • Complete Tutorial</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-blue: #00f5ff;
+            --neon-pink: #ff00ff;
+            --neon-purple: #bf00ff;
+            --neon-green: #00ff88;
+            --dark-bg: #0a0a0f;
+            --card-bg: rgba(15, 15, 25, 0.9);
+            --border-glow: rgba(0, 245, 255, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--dark-bg);
+            font-family: 'Rajdhani', sans-serif;
+            color: #e0e0e0;
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        /* Background effects */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(0, 245, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(191, 0, 255, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(180deg, rgba(0,0,0,0.9) 0%, transparent 100%);
+            padding: 20px 40px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .logo-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            padding: 10px 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            color: var(--neon-blue);
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 80px 40px 60px;
+            background: linear-gradient(180deg, transparent 0%, rgba(0, 245, 255, 0.02) 100%);
+        }
+
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: rgba(255,255,255,0.6);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 25px;
+            background: linear-gradient(135deg, rgba(0, 245, 255, 0.2), rgba(191, 0, 255, 0.2));
+            border: 1px solid var(--border-glow);
+            border-radius: 50px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: var(--neon-blue);
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+
+        /* Table of Contents */
+        .toc {
+            background: var(--card-bg);
+            border: 1px solid var(--border-glow);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 50px;
+        }
+
+        .toc h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
+            color: var(--neon-blue);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toc-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 10px;
+        }
+
+        .toc-list a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            padding: 12px 15px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .toc-list a:hover {
+            background: rgba(0, 245, 255, 0.1);
+            color: var(--neon-blue);
+        }
+
+        .toc-number {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        /* Section */
+        .section {
+            margin-bottom: 60px;
+        }
+
+        .section h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 28px;
+            color: var(--neon-blue);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border-glow);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
+            color: var(--neon-pink);
+            margin: 30px 0 15px;
+        }
+
+        .section p {
+            margin-bottom: 15px;
+            font-size: 17px;
+        }
+
+        /* Code Blocks */
+        .code-block {
+            background: #0d0d15;
+            border: 1px solid rgba(0, 245, 255, 0.2);
+            border-radius: 15px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .code-header {
+            background: rgba(0, 245, 255, 0.1);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(0, 245, 255, 0.2);
+        }
+
+        .code-filename {
+            font-family: 'Fira Code', monospace;
+            font-size: 13px;
+            color: var(--neon-green);
+        }
+
+        .code-lang {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 10px;
+            color: rgba(255,255,255,0.5);
+            letter-spacing: 1px;
+        }
+
+        .code-content {
+            padding: 20px;
+            overflow-x: auto;
+        }
+
+        pre {
+            font-family: 'Fira Code', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #e0e0e0;
+            margin: 0;
+        }
+
+        .code-comment { color: #6a9955; }
+        .code-keyword { color: #c586c0; }
+        .code-string { color: #ce9178; }
+        .code-function { color: #dcdcaa; }
+        .code-number { color: #b5cea8; }
+        .code-class { color: #4ec9b0; }
+        .code-property { color: #9cdcfe; }
+
+        /* Info Boxes */
+        .info-box {
+            background: var(--card-bg);
+            border-left: 4px solid var(--neon-blue);
+            border-radius: 0 15px 15px 0;
+            padding: 20px 25px;
+            margin: 25px 0;
+        }
+
+        .info-box.tip {
+            border-left-color: var(--neon-green);
+        }
+
+        .info-box.warning {
+            border-left-color: #ffaa00;
+        }
+
+        .info-box-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            color: var(--neon-blue);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-box.tip .info-box-title { color: var(--neon-green); }
+        .info-box.warning .info-box-title { color: #ffaa00; }
+
+        /* Feature List */
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .feature-item {
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            border-color: var(--neon-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 245, 255, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .feature-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            color: var(--neon-blue);
+            margin-bottom: 8px;
+        }
+
+        .feature-desc {
+            font-size: 14px;
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* Steps */
+        .step {
+            display: flex;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .step-number {
+            flex-shrink: 0;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .step-content h4 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 16px;
+            color: var(--neon-blue);
+            margin-bottom: 10px;
+        }
+
+        /* Terminal */
+        .terminal {
+            background: #1a1a2e;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .terminal-header {
+            background: #16213e;
+            padding: 12px 20px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .terminal-dot.red { background: #ff5f56; }
+        .terminal-dot.yellow { background: #ffbd2e; }
+        .terminal-dot.green { background: #27c93f; }
+
+        .terminal-content {
+            padding: 20px;
+            font-family: 'Fira Code', monospace;
+            font-size: 14px;
+        }
+
+        .terminal-prompt {
+            color: var(--neon-green);
+        }
+
+        .terminal-command {
+            color: #fff;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 60px 40px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 80px;
+        }
+
+        .footer p {
+            color: rgba(255,255,255,0.4);
+            font-size: 14px;
+        }
+
+        .footer a {
+            color: var(--neon-blue);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+            .main-content {
+                padding: 20px;
+            }
+            .section h2 {
+                font-size: 22px;
+            }
+            .step {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">🌌</div>
+                <span class="logo-text">NEXUS</span>
+            </a>
+            <a href="index.html" class="back-btn">
+                ← Back to App
+            </a>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>🚀 Build Your Own NEXUS</h1>
+        <p>A complete guide to creating a real-time 3D particle system with hand gesture control using Three.js and MediaPipe</p>
+        <div class="hero-badge">📖 BEGINNER FRIENDLY TUTORIAL</div>
+    </section>
+
+    <main class="main-content">
+        <!-- Table of Contents -->
+        <nav class="toc">
+            <h2>📑 Table of Contents</h2>
+            <ul class="toc-list">
+                <li><a href="#overview"><span class="toc-number">1</span> Project Overview</a></li>
+                <li><a href="#prerequisites"><span class="toc-number">2</span> Prerequisites</a></li>
+                <li><a href="#setup"><span class="toc-number">3</span> Project Setup</a></li>
+                <li><a href="#threejs"><span class="toc-number">4</span> Three.js Basics</a></li>
+                <li><a href="#particles"><span class="toc-number">5</span> Creating Particles</a></li>
+                <li><a href="#shapes"><span class="toc-number">6</span> Shape Generation</a></li>
+                <li><a href="#handtracking"><span class="toc-number">7</span> Hand Tracking</a></li>
+                <li><a href="#gestures"><span class="toc-number">8</span> Gesture Recognition</a></li>
+                <li><a href="#integration"><span class="toc-number">9</span> Putting It Together</a></li>
+                <li><a href="#tips"><span class="toc-number">10</span> Pro Tips</a></li>
+            </ul>
+        </nav>
+
+        <!-- Section 1: Overview -->
+        <section id="overview" class="section">
+            <h2>🎯 Project Overview</h2>
+            <p>NEXUS is an interactive 3D particle visualization that responds to your hand gestures in real-time. It combines the power of <strong>Three.js</strong> for 3D graphics with <strong>MediaPipe Hands</strong> for gesture recognition.</p>
+            
+            <div class="feature-list">
+                <div class="feature-item">
+                    <div class="feature-icon">🎨</div>
+                    <div class="feature-title">PARTICLE SYSTEM</div>
+                    <div class="feature-desc">3000+ particles with custom shaders for beautiful glow effects</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">✋</div>
+                    <div class="feature-title">HAND TRACKING</div>
+                    <div class="feature-desc">Real-time gesture recognition using your webcam</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🌀</div>
+                    <div class="feature-title">8 UNIQUE SHAPES</div>
+                    <div class="feature-desc">Hearts, galaxy, DNA helix, tornado and more</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-title">60 FPS</div>
+                    <div class="feature-desc">Optimized for smooth performance on modern browsers</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Prerequisites -->
+        <section id="prerequisites" class="section">
+            <h2>📋 Prerequisites</h2>
+            <p>Before we start, make sure you have:</p>
+            
+            <div class="info-box">
+                <div class="info-box-title">📦 Required Knowledge</div>
+                <ul>
+                    <li>Basic HTML, CSS, and JavaScript</li>
+                    <li>Understanding of 3D coordinates (x, y, z)</li>
+                    <li>Familiarity with browser developer tools</li>
+                </ul>
+            </div>
+
+            <div class="info-box tip">
+                <div class="info-box-title">💡 Helpful But Not Required</div>
+                <ul>
+                    <li>WebGL concepts</li>
+                    <li>Linear algebra (vectors, matrices)</li>
+                    <li>Shader programming (GLSL)</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Section 3: Setup -->
+        <section id="setup" class="section">
+            <h2>🛠️ Project Setup</h2>
+            
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h4>Create Project Folder</h4>
+                    <p>Create a new folder for your project and create these files:</p>
+                </div>
+            </div>
+
+            <div class="terminal">
+                <div class="terminal-header">
+                    <div class="terminal-dot red"></div>
+                    <div class="terminal-dot yellow"></div>
+                    <div class="terminal-dot green"></div>
+                </div>
+                <div class="terminal-content">
+                    <span class="terminal-prompt">$</span> <span class="terminal-command">mkdir nexus-particle-system</span><br>
+                    <span class="terminal-prompt">$</span> <span class="terminal-command">cd nexus-particle-system</span><br>
+                    <span class="terminal-prompt">$</span> <span class="terminal-command">touch index.html particles.js handTracking.js main.js</span>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h4>Set Up HTML Structure</h4>
+                    <p>Add the required CDN scripts for Three.js and MediaPipe:</p>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-filename">index.html</span>
+                    <span class="code-lang">HTML</span>
+                </div>
+                <div class="code-content">
+<pre><span class="code-keyword">&lt;!DOCTYPE html&gt;</span>
+<span class="code-keyword">&lt;html</span> <span class="code-property">lang</span>=<span class="code-string">"en"</span><span class="code-keyword">&gt;</span>
+<span class="code-keyword">&lt;head&gt;</span>
+    <span class="code-keyword">&lt;meta</span> <span class="code-property">charset</span>=<span class="code-string">"UTF-8"</span><span class="code-keyword">&gt;</span>
+    <span class="code-keyword">&lt;title&gt;</span>NEXUS Particle System<span class="code-keyword">&lt;/title&gt;</span>
+<span class="code-keyword">&lt;/head&gt;</span>
+<span class="code-keyword">&lt;body&gt;</span>
+    <span class="code-keyword">&lt;div</span> <span class="code-property">id</span>=<span class="code-string">"container"</span><span class="code-keyword">&gt;&lt;/div&gt;</span>
+    <span class="code-keyword">&lt;video</span> <span class="code-property">id</span>=<span class="code-string">"video"</span> <span class="code-property">autoplay</span><span class="code-keyword">&gt;&lt;/video&gt;</span>
+    
+    <span class="code-comment">&lt;!-- Three.js --&gt;</span>
+    <span class="code-keyword">&lt;script</span> <span class="code-property">src</span>=<span class="code-string">"https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"</span><span class="code-keyword">&gt;&lt;/script&gt;</span>
+    
+    <span class="code-comment">&lt;!-- MediaPipe Hands --&gt;</span>
+    <span class="code-keyword">&lt;script</span> <span class="code-property">src</span>=<span class="code-string">"https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"</span><span class="code-keyword">&gt;&lt;/script&gt;</span>
+    
+    <span class="code-keyword">&lt;script</span> <span class="code-property">src</span>=<span class="code-string">"particles.js"</span><span class="code-keyword">&gt;&lt;/script&gt;</span>
+    <span class="code-keyword">&lt;script</span> <span class="code-property">src</span>=<span class="code-string">"handTracking.js"</span><span class="code-keyword">&gt;&lt;/script&gt;</span>
+    <span class="code-keyword">&lt;script</span> <span class="code-property">src</span>=<span class="code-string">"main.js"</span><span class="code-keyword">&gt;&lt;/script&gt;</span>
+<span class="code-keyword">&lt;/body&gt;</span>
+<span class="code-keyword">&lt;/html&gt;</span></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Three.js Basics -->
+        <section id="threejs" class="section">
+            <h2>🎮 Three.js Basics</h2>
+            <p>Three.js is a JavaScript library that makes WebGL easy to use. Every Three.js scene needs three things:</p>
+            
+            <div class="feature-list">
+                <div class="feature-item">
+                    <div class="feature-icon">🎬</div>
+                    <div class="feature-title">SCENE</div>
+                    <div class="feature-desc">The container that holds all your 3D objects</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📷</div>
+                    <div class="feature-title">CAMERA</div>
+                    <div class="feature-desc">The viewpoint from which you see the scene</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🖥️</div>
+                    <div class="feature-title">RENDERER</div>
+                    <div class="feature-desc">Draws the scene to the screen</div>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-filename">particles.js</span>
+                    <span class="code-lang">JAVASCRIPT</span>
+                </div>
+                <div class="code-content">
+<pre><span class="code-comment">// Create the scene</span>
+<span class="code-keyword">const</span> <span class="code-property">scene</span> = <span class="code-keyword">new</span> <span class="code-class">THREE</span>.<span class="code-function">Scene</span>();
+
+<span class="code-comment">// Create a perspective camera</span>
+<span class="code-keyword">const</span> <span class="code-property">camera</span> = <span class="code-keyword">new</span> <span class="code-class">THREE</span>.<span class="code-function">PerspectiveCamera</span>(
+    <span class="code-number">75</span>,                                    <span class="code-comment">// Field of view</span>
+    <span class="code-property">window</span>.<span class="code-property">innerWidth</span> / <span class="code-property">window</span>.<span class="code-property">innerHeight</span>, <span class="code-comment">// Aspect ratio</span>
+    <span class="code-number">0.1</span>,                                   <span class="code-comment">// Near clipping plane</span>
+    <span class="code-number">1000</span>                                   <span class="code-comment">// Far clipping plane</span>
+);
+<span class="code-property">camera</span>.<span class="code-property">position</span>.<span class="code-property">z</span> = <span class="code-number">60</span>;
+
+<span class="code-comment">// Create the renderer</span>
+<span class="code-keyword">const</span> <span class="code-property">renderer</span> = <span class="code-keyword">new</span> <span class="code-class">THREE</span>.<span class="code-function">WebGLRenderer</span>({ <span class="code-property">antialias</span>: <span class="code-keyword">true</span> });
+<span class="code-property">renderer</span>.<span class="code-function">setSize</span>(<span class="code-property">window</span>.<span class="code-property">innerWidth</span>, <span class="code-property">window</span>.<span class="code-property">innerHeight</span>);
+<span class="code-property">document</span>.<span class="code-function">getElementById</span>(<span class="code-string">'container'</span>).<span class="code-function">appendChild</span>(<span class="code-property">renderer</span>.<span class="code-property">domElement</span>);
+
+<span class="code-comment">// Animation loop</span>
+<span class="code-keyword">function</span> <span class="code-function">animate</span>() {
+    <span class="code-function">requestAnimationFrame</span>(<span class="code-function">animate</span>);
+    <span class="code-property">renderer</span>.<span class="code-function">render</span>(<span class="code-property">scene</span>, <span class="code-property">camera</span>);
+}
+<span class="code-function">animate</span>();</pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Creating Particles -->
+        <section id="particles" class="section">
+            <h2>✨ Creating Particles</h2>
+            <p>In Three.js, we use <code>BufferGeometry</code> and <code>Points</code> to create efficient particle systems. Each particle is just a point in 3D space.</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-filename">particles.js</span>
+                    <span class="code-lang">JAVASCRIPT</span>
+                </div>
+                <div class="code-content">
+<pre><span class="code-keyword">const</span> <span class="code-property">particleCount</span> = <span class="code-number">3000</span>;
+<span class="code-keyword">const</span> <span class="code-property">geometry</span> = <span class="code-keyword">new</span> <span class="code-class">THREE</span>.<span class="code-function">BufferGeometry</span>();
+
+<span class="code-comment">// Create arrays for particle attributes</span>
+<span class="code-keyword">const</span> <span class="code-property">positions</span> = <span class="code-keyword">new</span> <span class="code-class">Float32Array</span>(<span class="code-property">particleCount</span> * <span class="code-number">3</span>);
+<span class="code-keyword">const</span> <span class="code-property">colors</span> = <span class="code-keyword">new</span> <span class="code-class">Float32Array</span>(<span class="code-property">particleCount</span> * <span class="code-number">3</span>);
+
+<span class="code-comment">// Fill with random positions</span>
+<span class="code-keyword">for</span> (<span class="code-keyword">let</span> <span class="code-property">i</span> = <span class="code-number">0</span>; <span class="code-property">i</span> &lt; <span class="code-property">particleCount</span>; <span class="code-property">i</span>++) {
+    <span class="code-property">positions</span>[<span class="code-property">i</span> * <span class="code-number">3</span>] = (<span class="code-class">Math</span>.<span class="code-function">random</span>() - <span class="code-number">0.5</span>) * <span class="code-number">50</span>;     <span class="code-comment">// x</span>
+    <span class="code-property">positions</span>[<span class="code-property">i</span> * <span class="code-number">3</span> + <span class="code-number">1</span>] = (<span class="code-class">Math</span>.<span class="code-function">random</span>() - <span class="code-number">0.5</span>) * <span class="code-number">50</span>; <span class="code-comment">// y</span>
+    <span class="code-property">positions</span>[<span class="code-property">i</span> * <span class="code-number">3</span> + <span class="code-number">2</span>] = (<span class="code-class">Math</span>.<span class="code-function">random</span>() - <span class="code-number">0.5</span>) * <span class="code-number">50</span>; <span class="code-comment">// z</span>
+    
+    <span class="code-comment">// Random colors</span>
+    <span class="code-property">colors</span>[<span class="code-property">i</span> * <span class="code-number">3</span>] = <span class="code-class">Math</span>.<span class="code-function">random</span>();     <span class="code-comment">// r</span>
+    <span class="code-property">colors</span>[<span class="code-property">i</span> * <span class="code-number">3</span> + <span class="code-number">1</span>] = <span class="code-class">Math</span>.<span class="code-function">random</span>(); <span class="code-comment">// g</span>
+    <span class="code-property">colors</span>[<span class="code-property">i</span> * <span class="code-number">3</span> + <span class="code-number">2</span>] = <span class="code-class">Math</span>.<span class="code-function">random</span>(); <span class="code-comment">// b</span>
+}
+
+<span class="code-property">geometry</span>.<span class="code-function">setAttribute</span>(<span class="code-string">'position'</span>, <span class="code-keyword">new</span> <span class="code-class">THREE</span>.<span class="code-function">BufferAttribute</span>(<span class="code-property">positions</span>, <span class="code-number">3</span>));
+<span class="code-property">geometry</span>.<span class="code-function">setAttribute</span>(<span class="code-string">'color'</span>, <span class="code-keyword">new</span> <span class="code-class">THREE</span>.<span class="code-function">BufferAttribute</span>(<span class="code-property">colors</span>, <span class="code-number">3</span>));
+
+<span class="code-comment">// Create material with additive blending for glow effect</span>
+<span class="code-keyword">const</span> <span class="code-property">material</span> = <span class="code-keyword">new</span> <span class="code-class">THREE</span>.<span class="code-function">PointsMaterial</span>({
+    <span class="code-property">size</span>: <span class="code-number">1</span>,
+    <span class="code-property">vertexColors</span>: <span class="code-keyword">true</span>,
+    <span class="code-property">transparent</span>: <span class="code-keyword">true</span>,
+    <span class="code-property">blending</span>: <span class="code-class">THREE</span>.<span class="code-property">AdditiveBlending</span>
+});
+
+<span class="code-keyword">const</span> <span class="code-property">particles</span> = <span class="code-keyword">new</span> <span class="code-class">THREE</span>.<span class="code-function">Points</span>(<span class="code-property">geometry</span>, <span class="code-property">material</span>);
+<span class="code-property">scene</span>.<span class="code-function">add</span>(<span class="code-property">particles</span>);</pre>
+                </div>
+            </div>
+
+            <div class="info-box tip">
+                <div class="info-box-title">💡 Pro Tip</div>
+                <p>Using <code>AdditiveBlending</code> makes overlapping particles appear brighter, creating that beautiful glow effect!</p>
+            </div>
+        </section>
+
+        <!-- Section 6: Shapes -->
+        <section id="shapes" class="section">
+            <h2>🌀 Shape Generation</h2>
+            <p>The magic happens in how we position the particles. By using mathematical equations, we can create stunning shapes!</p>
+
+            <h3>❤️ Heart Shape</h3>
+            <p>The heart uses a parametric equation. For each particle, we calculate its position based on a parameter t:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-filename">shapes.js</span>
+                    <span class="code-lang">JAVASCRIPT</span>
+                </div>
+                <div class="code-content">
+<pre><span class="code-keyword">function</span> <span class="code-function">generateHeartPositions</span>(<span class="code-property">positions</span>) {
+    <span class="code-keyword">for</span> (<span class="code-keyword">let</span> <span class="code-property">i</span> = <span class="code-number">0</span>; <span class="code-property">i</span> &lt; <span class="code-property">particleCount</span>; <span class="code-property">i</span>++) {
+        <span class="code-keyword">const</span> <span class="code-property">t</span> = (<span class="code-property">i</span> / <span class="code-property">particleCount</span>) * <span class="code-class">Math</span>.<span class="code-property">PI</span> * <span class="code-number">2</span>;
+        
+        <span class="code-comment">// Heart parametric equations</span>
+        <span class="code-keyword">const</span> <span class="code-property">x</span> = <span class="code-number">16</span> * <span class="code-class">Math</span>.<span class="code-function">pow</span>(<span class="code-class">Math</span>.<span class="code-function">sin</span>(<span class="code-property">t</span>), <span class="code-number">3</span>);
+        <span class="code-keyword">const</span> <span class="code-property">y</span> = <span class="code-number">13</span> * <span class="code-class">Math</span>.<span class="code-function">cos</span>(<span class="code-property">t</span>) 
+                  - <span class="code-number">5</span> * <span class="code-class">Math</span>.<span class="code-function">cos</span>(<span class="code-number">2</span> * <span class="code-property">t</span>) 
+                  - <span class="code-number">2</span> * <span class="code-class">Math</span>.<span class="code-function">cos</span>(<span class="code-number">3</span> * <span class="code-property">t</span>) 
+                  - <span class="code-class">Math</span>.<span class="code-function">cos</span>(<span class="code-number">4</span> * <span class="code-property">t</span>);
+        <span class="code-keyword">const</span> <span class="code-property">z</span> = (<span class="code-class">Math</span>.<span class="code-function">random</span>() - <span class="code-number">0.5</span>) * <span class="code-number">8</span>;
+        
+        <span class="code-property">positions</span>[<span class="code-property">i</span> * <span class="code-number">3</span>] = <span class="code-property">x</span>;
+        <span class="code-property">positions</span>[<span class="code-property">i</span> * <span class="code-number">3</span> + <span class="code-number">1</span>] = <span class="code-property">y</span>;
+        <span class="code-property">positions</span>[<span class="code-property">i</span> * <span class="code-number">3</span> + <span class="code-number">2</span>] = <span class="code-property">z</span>;
+    }
+}</pre>
+                </div>
+            </div>
+
+            <h3>🌀 Spiral Galaxy</h3>
+            <p>For the galaxy, we create spiral arms by adding rotation based on distance from center:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-filename">shapes.js</span>
+                    <span class="code-lang">JAVASCRIPT</span>
+                </div>
+                <div class="code-content">
+<pre><span class="code-keyword">function</span> <span class="code-function">generateGalaxyPositions</span>(<span class="code-property">positions</span>) {
+    <span class="code-keyword">const</span> <span class="code-property">arms</span> = <span class="code-number">4</span>;
+    <span class="code-keyword">const</span> <span class="code-property">radius</span> = <span class="code-number">30</span>;
+    
+    <span class="code-keyword">for</span> (<span class="code-keyword">let</span> <span class="code-property">i</span> = <span class="code-number">0</span>; <span class="code-property">i</span> &lt; <span class="code-property">particleCount</span>; <span class="code-property">i</span>++) {
+        <span class="code-keyword">const</span> <span class="code-property">r</span> = <span class="code-class">Math</span>.<span class="code-function">random</span>() * <span class="code-property">radius</span>;
+        <span class="code-keyword">const</span> <span class="code-property">armAngle</span> = (<span class="code-property">i</span> % <span class="code-property">arms</span>) * (<span class="code-class">Math</span>.<span class="code-property">PI</span> * <span class="code-number">2</span> / <span class="code-property">arms</span>);
+        <span class="code-keyword">const</span> <span class="code-property">spin</span> = <span class="code-property">r</span> * <span class="code-number">0.5</span>;  <span class="code-comment">// More spin as distance increases</span>
+        <span class="code-keyword">const</span> <span class="code-property">angle</span> = <span class="code-property">armAngle</span> + <span class="code-property">spin</span>;
+        
+        <span class="code-property">positions</span>[<span class="code-property">i</span> * <span class="code-number">3</span>] = <span class="code-class">Math</span>.<span class="code-function">cos</span>(<span class="code-property">angle</span>) * <span class="code-property">r</span>;
+        <span class="code-property">positions</span>[<span class="code-property">i</span> * <span class="code-number">3</span> + <span class="code-number">1</span>] = (<span class="code-class">Math</span>.<span class="code-function">random</span>() - <span class="code-number">0.5</span>) * <span class="code-number">2</span>;
+        <span class="code-property">positions</span>[<span class="code-property">i</span> * <span class="code-number">3</span> + <span class="code-number">2</span>] = <span class="code-class">Math</span>.<span class="code-function">sin</span>(<span class="code-property">angle</span>) * <span class="code-property">r</span>;
+    }
+}</pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 7: Hand Tracking -->
+        <section id="handtracking" class="section">
+            <h2>✋ Hand Tracking with MediaPipe</h2>
+            <p>MediaPipe Hands detects 21 landmarks on each hand. We use these points to recognize gestures.</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-filename">handTracking.js</span>
+                    <span class="code-lang">JAVASCRIPT</span>
+                </div>
+                <div class="code-content">
+<pre><span class="code-keyword">const</span> <span class="code-property">hands</span> = <span class="code-keyword">new</span> <span class="code-class">Hands</span>({
+    <span class="code-property">locateFile</span>: (<span class="code-property">file</span>) => {
+        <span class="code-keyword">return</span> <span class="code-string">`https://cdn.jsdelivr.net/npm/@mediapipe/hands/</span>${<span class="code-property">file</span>}<span class="code-string">`</span>;
+    }
+});
+
+<span class="code-property">hands</span>.<span class="code-function">setOptions</span>({
+    <span class="code-property">maxNumHands</span>: <span class="code-number">2</span>,
+    <span class="code-property">modelComplexity</span>: <span class="code-number">1</span>,
+    <span class="code-property">minDetectionConfidence</span>: <span class="code-number">0.7</span>,
+    <span class="code-property">minTrackingConfidence</span>: <span class="code-number">0.5</span>
+});
+
+<span class="code-property">hands</span>.<span class="code-function">onResults</span>((<span class="code-property">results</span>) => {
+    <span class="code-keyword">if</span> (<span class="code-property">results</span>.<span class="code-property">multiHandLandmarks</span>) {
+        <span class="code-keyword">for</span> (<span class="code-keyword">const</span> <span class="code-property">landmarks</span> <span class="code-keyword">of</span> <span class="code-property">results</span>.<span class="code-property">multiHandLandmarks</span>) {
+            <span class="code-comment">// Each landmark has x, y, z coordinates (0 to 1)</span>
+            <span class="code-keyword">const</span> <span class="code-property">thumbTip</span> = <span class="code-property">landmarks</span>[<span class="code-number">4</span>];
+            <span class="code-keyword">const</span> <span class="code-property">indexTip</span> = <span class="code-property">landmarks</span>[<span class="code-number">8</span>];
+            <span class="code-comment">// ... detect gestures</span>
+        }
+    }
+});</pre>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <div class="info-box-title">🖐️ Hand Landmark Indices</div>
+                <p><strong>Fingertips:</strong> Thumb=4, Index=8, Middle=12, Ring=16, Pinky=20</p>
+                <p><strong>Base joints:</strong> Thumb=2, Index=5, Middle=9, Ring=13, Pinky=17</p>
+                <p><strong>Wrist:</strong> 0</p>
+            </div>
+        </section>
+
+        <!-- Section 8: Gestures -->
+        <section id="gestures" class="section">
+            <h2>🤘 Gesture Recognition</h2>
+            <p>We detect gestures by checking the relative positions of finger landmarks:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-filename">gestures.js</span>
+                    <span class="code-lang">JAVASCRIPT</span>
+                </div>
+                <div class="code-content">
+<pre><span class="code-keyword">function</span> <span class="code-function">isThumbsUp</span>(<span class="code-property">landmarks</span>) {
+    <span class="code-keyword">const</span> <span class="code-property">thumbTip</span> = <span class="code-property">landmarks</span>[<span class="code-number">4</span>];
+    <span class="code-keyword">const</span> <span class="code-property">thumbBase</span> = <span class="code-property">landmarks</span>[<span class="code-number">2</span>];
+    
+    <span class="code-comment">// Thumb is pointing up when tip is above base</span>
+    <span class="code-keyword">const</span> <span class="code-property">thumbUp</span> = <span class="code-property">thumbTip</span>.<span class="code-property">y</span> &lt; <span class="code-property">thumbBase</span>.<span class="code-property">y</span> - <span class="code-number">0.05</span>;
+    
+    <span class="code-comment">// Check other fingers are curled</span>
+    <span class="code-keyword">const</span> <span class="code-property">indexCurled</span> = <span class="code-property">landmarks</span>[<span class="code-number">8</span>].<span class="code-property">y</span> > <span class="code-property">landmarks</span>[<span class="code-number">6</span>].<span class="code-property">y</span>;
+    <span class="code-keyword">const</span> <span class="code-property">middleCurled</span> = <span class="code-property">landmarks</span>[<span class="code-number">12</span>].<span class="code-property">y</span> > <span class="code-property">landmarks</span>[<span class="code-number">10</span>].<span class="code-property">y</span>;
+    
+    <span class="code-keyword">return</span> <span class="code-property">thumbUp</span> && <span class="code-property">indexCurled</span> && <span class="code-property">middleCurled</span>;
+}
+
+<span class="code-keyword">function</span> <span class="code-function">isPeaceSign</span>(<span class="code-property">landmarks</span>) {
+    <span class="code-comment">// Index and middle extended, others curled</span>
+    <span class="code-keyword">const</span> <span class="code-property">indexUp</span> = <span class="code-property">landmarks</span>[<span class="code-number">8</span>].<span class="code-property">y</span> &lt; <span class="code-property">landmarks</span>[<span class="code-number">6</span>].<span class="code-property">y</span>;
+    <span class="code-keyword">const</span> <span class="code-property">middleUp</span> = <span class="code-property">landmarks</span>[<span class="code-number">12</span>].<span class="code-property">y</span> &lt; <span class="code-property">landmarks</span>[<span class="code-number">10</span>].<span class="code-property">y</span>;
+    <span class="code-keyword">const</span> <span class="code-property">ringDown</span> = <span class="code-property">landmarks</span>[<span class="code-number">16</span>].<span class="code-property">y</span> > <span class="code-property">landmarks</span>[<span class="code-number">14</span>].<span class="code-property">y</span>;
+    <span class="code-keyword">const</span> <span class="code-property">pinkyDown</span> = <span class="code-property">landmarks</span>[<span class="code-number">20</span>].<span class="code-property">y</span> > <span class="code-property">landmarks</span>[<span class="code-number">18</span>].<span class="code-property">y</span>;
+    
+    <span class="code-keyword">return</span> <span class="code-property">indexUp</span> && <span class="code-property">middleUp</span> && <span class="code-property">ringDown</span> && <span class="code-property">pinkyDown</span>;
+}</pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 9: Integration -->
+        <section id="integration" class="section">
+            <h2>🔗 Putting It All Together</h2>
+            <p>Finally, connect the gestures to particle behaviors:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-filename">main.js</span>
+                    <span class="code-lang">JAVASCRIPT</span>
+                </div>
+                <div class="code-content">
+<pre><span class="code-keyword">function</span> <span class="code-function">handleGesture</span>(<span class="code-property">gesture</span>) {
+    <span class="code-keyword">switch</span> (<span class="code-property">gesture</span>) {
+        <span class="code-keyword">case</span> <span class="code-string">'fist'</span>:
+            <span class="code-property">particleSystem</span>.<span class="code-function">setExpansion</span>(<span class="code-number">0.3</span>);  <span class="code-comment">// Compress</span>
+            <span class="code-keyword">break</span>;
+        <span class="code-keyword">case</span> <span class="code-string">'palm'</span>:
+            <span class="code-property">particleSystem</span>.<span class="code-function">setExpansion</span>(<span class="code-number">1.5</span>);  <span class="code-comment">// Expand</span>
+            <span class="code-keyword">break</span>;
+        <span class="code-keyword">case</span> <span class="code-string">'thumbsup'</span>:
+            <span class="code-property">particleSystem</span>.<span class="code-function">triggerBurst</span>();   <span class="code-comment">// Explosion!</span>
+            <span class="code-keyword">break</span>;
+        <span class="code-keyword">case</span> <span class="code-string">'peace'</span>:
+            <span class="code-property">particleSystem</span>.<span class="code-function">nextShape</span>();       <span class="code-comment">// Change shape</span>
+            <span class="code-keyword">break</span>;
+    }
+}</pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 10: Tips -->
+        <section id="tips" class="section">
+            <h2>🎓 Pro Tips for Students</h2>
+
+            <div class="info-box tip">
+                <div class="info-box-title">💡 Performance Optimization</div>
+                <ul>
+                    <li>Use <code>BufferGeometry</code> instead of regular Geometry</li>
+                    <li>Limit particle count to 3000-5000 for smooth performance</li>
+                    <li>Use <code>needsUpdate = true</code> only when positions change</li>
+                </ul>
+            </div>
+
+            <div class="info-box tip">
+                <div class="info-box-title">💡 Gesture Detection Tips</div>
+                <ul>
+                    <li>Add a small threshold (0.02-0.05) to avoid flickering</li>
+                    <li>Use gesture smoothing (track last 3-5 frames)</li>
+                    <li>Test with different lighting conditions</li>
+                </ul>
+            </div>
+
+            <div class="info-box warning">
+                <div class="info-box-title">⚠️ Common Mistakes to Avoid</div>
+                <ul>
+                    <li>Don't forget to request camera permissions</li>
+                    <li>Always use HTTPS in production (required for camera access)</li>
+                    <li>Handle the case when no hand is detected</li>
+                </ul>
+            </div>
+
+            <h3>🚀 Ideas to Extend This Project</h3>
+            <ul style="margin-left: 20px; color: rgba(255,255,255,0.7);">
+                <li>Add audio visualization that responds to music</li>
+                <li>Implement two-hand gestures for more controls</li>
+                <li>Create a VR version using WebXR</li>
+                <li>Add particle physics for realistic movement</li>
+                <li>Export particle positions to create 3D prints</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>Built with 💜 by <a href="https://github.com/shiva" target="_blank">Shiva</a></p>
+        <p style="margin-top: 10px;">Questions? Open an issue on <a href="https://github.com/shiva" target="_blank">GitHub</a></p>
+    </footer>
+</body>
+</html>
