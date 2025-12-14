@@ -38,7 +38,7 @@ Control thousands of particles with just your hands! Wave, point, make a fist - 
 
 ```bash
 # Clone the repo
-git clone https://github.com/shiva/nexus-particles.git
+git clone https://github.com/shivaganesht/Realtime-3d-moving-model-AI.git
 cd nexus-particles
 
 # Start local server
@@ -138,7 +138,7 @@ MIT License - feel free to use, modify, and share!
 
 ## 🙏 Credits
 
-Created with ❤️ by [Shiva](https://github.com/shiva)
+Created with ❤️ by [Shiva](https://github.com/shivaganesht)
 
 Special thanks to:
 - Three.js team for the amazing 3D library
