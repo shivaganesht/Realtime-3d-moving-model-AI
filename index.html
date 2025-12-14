@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS • Interactive 3D Particle Universe</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌌</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-blue: #00f5ff;
+            --neon-pink: #ff00ff;
+            --neon-purple: #bf00ff;
+            --neon-green: #00ff88;
+            --dark-bg: #0a0a0f;
+            --glass-bg: rgba(10, 10, 20, 0.8);
+            --border-glow: rgba(0, 245, 255, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            overflow: hidden;
+            background: var(--dark-bg);
+            font-family: 'Rajdhani', sans-serif;
+            color: white;
+        }
+
+        /* Animated Background Grid */
+        .cyber-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 245, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 245, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes gridMove {
+            0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
+            100% { transform: perspective(500px) rotateX(60deg) translateY(50px); }
+        }
+
+        #container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, transparent 100%);
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 0 30px rgba(0, 245, 255, 0.5);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 30px rgba(0, 245, 255, 0.5); }
+            50% { box-shadow: 0 0 50px rgba(0, 245, 255, 0.8), 0 0 80px rgba(191, 0, 255, 0.4); }
+        }
+
+        .logo-text h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            font-weight: 900;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 3px;
+        }
+
+        .logo-text p {
+            font-size: 11px;
+            color: rgba(255,255,255,0.5);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 14px;
+            letter-spacing: 1px;
+            padding: 10px 20px;
+            border: 1px solid transparent;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .nav-link:hover {
+            color: var(--neon-blue);
+            border-color: var(--neon-blue);
+            background: rgba(0, 245, 255, 0.1);
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.3);
+        }
+
+        .github-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .github-link:hover {
+            border-color: var(--neon-green);
+            box-shadow: 0 0 25px rgba(0, 255, 136, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .github-link svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+        }
+
+        /* Video Container */
+        #video-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 280px;
+            height: 210px;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 2px solid var(--neon-blue);
+            box-shadow: 
+                0 0 30px rgba(0, 245, 255, 0.3),
+                inset 0 0 30px rgba(0, 245, 255, 0.1);
+            z-index: 100;
+            background: var(--dark-bg);
+        }
+
+        #video-container::before {
+            content: 'NEURAL TRACKING ACTIVE';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 9px;
+            color: var(--neon-green);
+            letter-spacing: 2px;
+            z-index: 10;
+            text-shadow: 0 0 10px var(--neon-green);
+        }
+
+        #video-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(0,245,255,0.1) 0%, transparent 50%, rgba(191,0,255,0.1) 100%);
+            pointer-events: none;
+        }
+
+        .scanning-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
+            animation: scan 2s ease-in-out infinite;
+            z-index: 5;
+        }
+
+        @keyframes scan {
+            0%, 100% { top: 0; opacity: 0; }
+            50% { opacity: 1; }
+            100% { top: 100%; }
+        }
+
+        #video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scaleX(-1);
+            filter: saturate(1.2) contrast(1.1);
+        }
+
+        #canvas-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform: scaleX(-1);
+        }
+
+        /* Control Panels */
+        .control-panel {
+            position: fixed;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glow);
+            border-radius: 20px;
+            padding: 25px;
+            z-index: 100;
+            box-shadow: 
+                0 0 40px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255,255,255,0.1);
+        }
+
+        .control-panel::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 20px;
+            right: 20px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--neon-blue), var(--neon-purple), transparent);
+        }
+
+        #controls {
+            top: 100px;
+            left: 30px;
+            max-width: 320px;
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .panel-header h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .panel-icon {
+            font-size: 24px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .control-group {
+            margin-bottom: 20px;
+        }
+
+        .control-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 10px;
+            color: rgba(255,255,255,0.6);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .btn {
+            padding: 10px 14px;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 12px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(255,255,255,0.05);
+            color: rgba(255,255,255,0.8);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px) scale(1.02);
+            border-color: var(--neon-blue);
+            box-shadow: 0 8px 25px rgba(0, 245, 255, 0.3);
+            color: white;
+        }
+
+        .btn.active {
+            background: linear-gradient(135deg, rgba(0, 245, 255, 0.3), rgba(191, 0, 255, 0.3));
+            border-color: var(--neon-blue);
+            box-shadow: 
+                0 0 20px rgba(0, 245, 255, 0.4),
+                inset 0 0 20px rgba(0, 245, 255, 0.1);
+            color: white;
+        }
+
+        /* Gesture Info Panel */
+        #gesture-info {
+            top: 100px;
+            right: 30px;
+            width: 280px;
+        }
+
+        .gesture-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .gesture-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 10px;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .gesture-item:hover {
+            background: rgba(0, 245, 255, 0.1);
+            border-color: rgba(0, 245, 255, 0.3);
+        }
+
+        .gesture-item.active {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 245, 255, 0.1));
+            border-color: var(--neon-green);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+        }
+
+        .gesture-icon {
+            font-size: 24px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+        }
+
+        .gesture-text {
+            flex: 1;
+        }
+
+        .gesture-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 10px;
+            color: var(--neon-blue);
+            margin-bottom: 2px;
+        }
+
+        .gesture-action {
+            font-size: 11px;
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* Status Bar */
+        #status-bar {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            display: flex;
+            gap: 15px;
+            z-index: 100;
+            max-width: calc(100% - 350px);
+            flex-wrap: wrap;
+        }
+
+        .status-item {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--neon-green);
+            box-shadow: 0 0 15px var(--neon-green);
+            animation: blink 2s ease-in-out infinite;
+        }
+
+        .status-indicator.warning {
+            background: #ffaa00;
+            box-shadow: 0 0 15px #ffaa00;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .status-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 11px;
+            letter-spacing: 1px;
+        }
+
+        /* Current Gesture Display */
+        #current-gesture {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 120px;
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            z-index: 50;
+            filter: drop-shadow(0 0 50px rgba(0, 245, 255, 0.8));
+        }
+
+        #current-gesture.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.2);
+        }
+
+        #gesture-label {
+            position: fixed;
+            top: calc(50% + 100px);
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
+            color: var(--neon-blue);
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+            z-index: 50;
+            text-shadow: 0 0 30px var(--neon-blue);
+        }
+
+        #gesture-label.show {
+            opacity: 1;
+        }
+
+        /* Loading Screen */
+        #loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--dark-bg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+        }
+
+        .loader {
+            width: 120px;
+            height: 120px;
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .loader-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 3px solid transparent;
+            border-radius: 50%;
+        }
+
+        .loader-ring:nth-child(1) {
+            border-top-color: var(--neon-blue);
+            animation: spin 1.5s linear infinite;
+        }
+
+        .loader-ring:nth-child(2) {
+            border-right-color: var(--neon-pink);
+            animation: spin 2s linear infinite reverse;
+        }
+
+        .loader-ring:nth-child(3) {
+            border-bottom-color: var(--neon-purple);
+            animation: spin 2.5s linear infinite;
+            width: 70%;
+            height: 70%;
+            top: 15%;
+            left: 15%;
+        }
+
+        .loader-ring:nth-child(4) {
+            border-left-color: var(--neon-green);
+            animation: spin 3s linear infinite reverse;
+            width: 50%;
+            height: 50%;
+            top: 25%;
+            left: 25%;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 16px;
+            letter-spacing: 8px;
+            color: var(--neon-blue);
+            animation: textPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes textPulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .loading-subtext {
+            margin-top: 15px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.4);
+            letter-spacing: 2px;
+        }
+
+        /* Glitch Effect */
+        .glitch {
+            animation: glitch 2s infinite;
+        }
+
+        @keyframes glitch {
+            0%, 90%, 100% { transform: translate(0); }
+            92% { transform: translate(-2px, 2px); }
+            94% { transform: translate(2px, -2px); }
+            96% { transform: translate(-2px, -2px); }
+            98% { transform: translate(2px, 2px); }
+        }
+
+        /* Footer */
+        .footer {
+            position: fixed;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 10px;
+            color: rgba(255,255,255,0.3);
+            z-index: 100;
+            letter-spacing: 1px;
+        }
+
+        .footer a {
+            color: var(--neon-blue);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .footer a:hover {
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            #gesture-info {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            #controls {
+                top: auto;
+                bottom: 260px;
+                left: 10px;
+                right: 10px;
+                max-width: none;
+                padding: 15px;
+            }
+            #video-container {
+                width: 140px;
+                height: 105px;
+                bottom: 130px;
+                right: 10px;
+            }
+            .header {
+                padding: 10px 15px;
+            }
+            .logo-text h1 {
+                font-size: 16px;
+            }
+            .nav-links {
+                gap: 10px;
+            }
+            .nav-link {
+                display: none;
+            }
+            #status-bar {
+                left: 10px;
+                bottom: 80px;
+                max-width: calc(100% - 170px);
+            }
+            .status-item {
+                padding: 8px 12px;
+            }
+            .status-text {
+                font-size: 9px;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.3);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--neon-blue);
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div id="loading">
+        <div class="loader">
+            <div class="loader-ring"></div>
+            <div class="loader-ring"></div>
+            <div class="loader-ring"></div>
+            <div class="loader-ring"></div>
+        </div>
+        <p class="loading-text glitch">NEXUS</p>
+        <p class="loading-subtext">Initializing quantum particle engine...</p>
+    </div>
+
+    <div class="cyber-grid"></div>
+    <div id="container"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">🌌</div>
+            <div class="logo-text">
+                <h1>NEXUS</h1>
+                <p>Particle Universe Engine v2.0</p>
+            </div>
+        </div>
+        <nav class="nav-links">
+            <a href="tutorial.html" class="nav-link">📚 How to Build</a>
+            <a href="https://github.com/shiva" class="github-link" target="_blank">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                </svg>
+                <span>@shiva</span>
+            </a>
+        </nav>
+    </header>
+
+    <!-- Video Container -->
+    <div id="video-container">
+        <div class="scanning-line"></div>
+        <video id="video" autoplay playsinline></video>
+        <canvas id="canvas-overlay"></canvas>
+    </div>
+
+    <!-- Control Panel -->
+    <div class="control-panel" id="controls">
+        <div class="panel-header">
+            <span class="panel-icon">⚛️</span>
+            <h2>PARTICLE ENGINE</h2>
+        </div>
+        
+        <div class="control-group">
+            <label>Quantum Shape Matrix</label>
+            <div class="btn-group">
+                <button class="btn active" data-shape="hearts">❤️ Hearts</button>
+                <button class="btn" data-shape="flowers">🌸 Flowers</button>
+                <button class="btn" data-shape="saturn">🪐 Saturn</button>
+                <button class="btn" data-shape="fireworks">🎆 Firework</button>
+                <button class="btn" data-shape="galaxy">🌀 Galaxy</button>
+                <button class="btn" data-shape="dna">🧬 DNA</button>
+                <button class="btn" data-shape="cube">📦 Tesseract</button>
+                <button class="btn" data-shape="tornado">🌪️ Vortex</button>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label>Chromatic Field</label>
+            <div class="btn-group">
+                <button class="btn active" data-color="cyberpunk">💜 Cyber</button>
+                <button class="btn" data-color="matrix">💚 Matrix</button>
+                <button class="btn" data-color="sunset">🌅 Sunset</button>
+                <button class="btn" data-color="aurora">🌌 Aurora</button>
+                <button class="btn" data-color="lava">🌋 Lava</button>
+                <button class="btn" data-color="ice">❄️ Ice</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gesture Info Panel -->
+    <div class="control-panel" id="gesture-info">
+        <div class="panel-header">
+            <span class="panel-icon">✋</span>
+            <h2>GESTURE COMMANDS</h2>
+        </div>
+        <div class="gesture-list">
+            <div class="gesture-item" data-gesture="fist">
+                <span class="gesture-icon">✊</span>
+                <div class="gesture-text">
+                    <div class="gesture-name">CLOSED FIST</div>
+                    <div class="gesture-action">Compress field</div>
+                </div>
+            </div>
+            <div class="gesture-item" data-gesture="palm">
+                <span class="gesture-icon">🖐️</span>
+                <div class="gesture-text">
+                    <div class="gesture-name">OPEN PALM</div>
+                    <div class="gesture-action">Expand field</div>
+                </div>
+            </div>
+            <div class="gesture-item" data-gesture="point">
+                <span class="gesture-icon">☝️</span>
+                <div class="gesture-text">
+                    <div class="gesture-name">POINT UP</div>
+                    <div class="gesture-action">Cycle colors</div>
+                </div>
+            </div>
+            <div class="gesture-item" data-gesture="peace">
+                <span class="gesture-icon">✌️</span>
+                <div class="gesture-text">
+                    <div class="gesture-name">PEACE SIGN</div>
+                    <div class="gesture-action">Next shape</div>
+                </div>
+            </div>
+            <div class="gesture-item" data-gesture="thumbsup">
+                <span class="gesture-icon">👍</span>
+                <div class="gesture-text">
+                    <div class="gesture-name">THUMBS UP</div>
+                    <div class="gesture-action">Explosion!</div>
+                </div>
+            </div>
+            <div class="gesture-item" data-gesture="rock">
+                <span class="gesture-icon">🤘</span>
+                <div class="gesture-text">
+                    <div class="gesture-name">ROCK SIGN</div>
+                    <div class="gesture-action">Chaos mode</div>
+                </div>
+            </div>
+            <div class="gesture-item" data-gesture="spiderman">
+                <span class="gesture-icon">🕷️</span>
+                <div class="gesture-text">
+                    <div class="gesture-name">SPIDER-MAN</div>
+                    <div class="gesture-action">Web effect</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Status Bar -->
+    <div id="status-bar">
+        <div class="status-item">
+            <div class="status-indicator" id="status-indicator"></div>
+            <span class="status-text" id="status">INITIALIZING...</span>
+        </div>
+        <div class="status-item">
+            <span class="status-text">PARTICLES: <span id="particle-count">3000</span></span>
+        </div>
+        <div class="status-item">
+            <span class="status-text">FPS: <span id="fps-counter">60</span></span>
+        </div>
+    </div>
+
+    <!-- Current Gesture Display -->
+    <div id="current-gesture"></div>
+    <div id="gesture-label"></div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        Crafted with 💜 by <a href="https://github.com/shiva" target="_blank">Shiva</a> • NEXUS Engine v2.0
+    </footer>
+
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- MediaPipe Hands -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+
+    <script src="particles.js"></script>
+    <script src="handTracking.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
