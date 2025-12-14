@@ -7,7 +7,11 @@
 ![MediaPipe](https://img.shields.io/badge/MediaPipe-Hands-orange?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT-purple?style=for-the-badge)
 
+🌐 **[Live Demo](https://realtime-3d-moving-model-ai.vercel.app/)** | 📖 [Tutorial](tutorial.html) | 💻 [GitHub](https://github.com/shivaganesht/Realtime-3d-moving-model-AI)
+
 ## 🎥 Demo
+
+**[🚀 Try it live here!](https://realtime-3d-moving-model-ai.vercel.app/)**
 
 Control thousands of particles with just your hands! Wave, point, make a fist - watch the particles respond in real-time.
 
