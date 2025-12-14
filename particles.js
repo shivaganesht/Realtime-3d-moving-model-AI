@@ -10,7 +10,11 @@ class ParticleSystem {
         this.container = container;
         this.scene = new THREE.Scene();
         this.particles = [];
-        this.particleCount = 3000;
+        
+        // Detect mobile and adjust particle count for performance
+        this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+        this.particleCount = this.isMobile ? 1500 : 3000;
+        
         this.currentShape = 'hearts';
         this.currentColorTheme = 'cyberpunk';
         this.expansionFactor = 1;

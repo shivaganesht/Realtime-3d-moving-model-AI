@@ -2,7 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#0a0a0f">
+    <meta name="description" content="Learn how to build NEXUS - A complete tutorial on creating 3D particle systems with hand gesture control">
     <title>How to Build NEXUS • Complete Tutorial</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
@@ -21,6 +25,11 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
@@ -28,6 +37,7 @@
             font-family: 'Rajdhani', sans-serif;
             color: #e0e0e0;
             line-height: 1.8;
+            -webkit-text-size-adjust: 100%;
             min-height: 100vh;
         }
 
@@ -497,18 +507,286 @@
 
         /* Responsive */
         @media (max-width: 768px) {
+            .header {
+                padding: 12px 15px;
+            }
+            
+            .header-content {
+                flex-direction: row;
+                gap: 10px;
+            }
+            
+            .logo-icon {
+                width: 35px;
+                height: 35px;
+                font-size: 18px;
+            }
+            
+            .logo-text {
+                font-size: 16px;
+            }
+            
+            .back-btn {
+                padding: 8px 12px;
+                font-size: 12px;
+                border-radius: 6px;
+            }
+            
+            .hero {
+                padding: 50px 20px 40px;
+            }
+            
             .hero h1 {
-                font-size: 32px;
+                font-size: 28px;
             }
+            
+            .hero p {
+                font-size: 16px;
+            }
+            
+            .hero-badge {
+                padding: 8px 16px;
+                font-size: 10px;
+            }
+            
+            .scroll-contribute-btn {
+                padding: 12px 20px;
+                font-size: 11px;
+            }
+            
             .main-content {
-                padding: 20px;
+                padding: 20px 15px;
             }
+            
+            .toc {
+                padding: 20px 15px;
+                border-radius: 15px;
+            }
+            
+            .toc h2 {
+                font-size: 14px;
+            }
+            
+            .toc-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .toc-list a {
+                padding: 10px 12px;
+                font-size: 14px;
+            }
+            
+            .toc-number {
+                width: 24px;
+                height: 24px;
+                font-size: 10px;
+            }
+            
             .section h2 {
-                font-size: 22px;
+                font-size: 20px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
             }
+            
+            .section h3 {
+                font-size: 16px;
+            }
+            
+            .section p {
+                font-size: 15px;
+            }
+            
+            .code-block {
+                border-radius: 12px;
+            }
+            
+            .code-header {
+                padding: 10px 15px;
+            }
+            
+            .code-filename {
+                font-size: 11px;
+            }
+            
+            .code-content {
+                padding: 15px;
+            }
+            
+            pre {
+                font-size: 12px;
+            }
+            
+            .info-box {
+                padding: 15px 18px;
+                border-radius: 0 12px 12px 0;
+            }
+            
+            .info-box-title {
+                font-size: 12px;
+            }
+            
+            .feature-list {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+            
+            .feature-item {
+                padding: 18px;
+                border-radius: 12px;
+            }
+            
+            .feature-icon {
+                font-size: 28px;
+            }
+            
+            .feature-title {
+                font-size: 10px;
+            }
+            
+            .feature-desc {
+                font-size: 12px;
+            }
+            
             .step {
                 flex-direction: column;
                 gap: 15px;
+            }
+            
+            .footer {
+                padding: 25px 15px;
+                margin-top: 50px;
+            }
+            
+            .footer p {
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 10px 12px;
+            }
+            
+            .logo-icon {
+                width: 30px;
+                height: 30px;
+                font-size: 16px;
+            }
+            
+            .logo-text {
+                font-size: 14px;
+            }
+            
+            .back-btn {
+                padding: 6px 10px;
+                font-size: 10px;
+            }
+            
+            .hero {
+                padding: 40px 15px 30px;
+            }
+            
+            .hero h1 {
+                font-size: 22px;
+            }
+            
+            .hero p {
+                font-size: 14px;
+            }
+            
+            .hero-badge {
+                padding: 6px 12px;
+                font-size: 9px;
+            }
+            
+            .scroll-contribute-btn {
+                padding: 10px 16px;
+                font-size: 10px;
+                letter-spacing: 1px;
+            }
+            
+            .main-content {
+                padding: 15px 12px;
+            }
+            
+            .toc {
+                padding: 15px 12px;
+            }
+            
+            .toc h2 {
+                font-size: 12px;
+            }
+            
+            .toc-list a {
+                padding: 8px 10px;
+                font-size: 12px;
+            }
+            
+            .section h2 {
+                font-size: 18px;
+            }
+            
+            .section h3 {
+                font-size: 14px;
+            }
+            
+            .section p {
+                font-size: 14px;
+                line-height: 1.6;
+            }
+            
+            pre {
+                font-size: 10px;
+            }
+            
+            .feature-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .feature-item {
+                padding: 15px;
+            }
+            
+            .info-box {
+                padding: 12px 15px;
+            }
+            
+            .info-box ul, .info-box ol {
+                padding-left: 15px;
+                font-size: 13px;
+            }
+            
+            .footer {
+                padding: 20px 12px;
+            }
+        }
+
+        /* Touch optimizations for mobile */
+        @media (hover: none) and (pointer: coarse) {
+            .toc-list a:active {
+                background: rgba(0, 245, 255, 0.2);
+                transform: scale(0.98);
+            }
+            
+            .back-btn:active {
+                transform: scale(0.95);
+            }
+            
+            .scroll-contribute-btn:active {
+                transform: scale(0.95);
+            }
+            
+            .hero-badge:active {
+                transform: scale(0.95);
+            }
+            
+            .feature-item {
+                cursor: pointer;
+            }
+            
+            .feature-item:active {
+                transform: scale(0.98);
             }
         }
 
@@ -619,6 +897,206 @@
 
         .shimmer-btn:hover::after {
             animation: shimmer 1s infinite;
+        }
+
+        /* Contribution Section Styles */
+        .contribute-section {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 245, 255, 0.05));
+            border: 2px solid var(--neon-green);
+            border-radius: 25px;
+            text-align: center;
+            padding: 40px 30px;
+        }
+
+        .contribute-heading {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .contribute-intro {
+            font-size: 18px;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .contribute-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 600px;
+            margin: 30px auto;
+        }
+
+        .contribute-card {
+            background: rgba(0,0,0,0.3);
+            padding: 20px;
+            border-radius: 20px;
+            text-align: left;
+            transition: all 0.3s ease;
+        }
+
+        .contribute-card:active {
+            transform: scale(0.98);
+        }
+
+        .contribute-card-blue {
+            border: 1px solid rgba(0, 245, 255, 0.2);
+        }
+
+        .contribute-card-blue h3 {
+            color: var(--neon-blue);
+            font-size: 20px;
+            margin-bottom: 15px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .contribute-card-pink {
+            border: 1px solid rgba(255, 0, 255, 0.2);
+        }
+
+        .contribute-card-pink h3 {
+            color: var(--neon-pink);
+            font-size: 20px;
+            margin-bottom: 15px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .contribute-card ol,
+        .contribute-card ul {
+            margin-left: 20px;
+            color: rgba(255,255,255,0.8);
+            line-height: 2;
+        }
+
+        .github-contribute-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px 40px;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.3), rgba(0, 245, 255, 0.3));
+            border: 3px solid var(--neon-green);
+            border-radius: 18px;
+            color: white;
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            margin-top: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+        }
+
+        .github-contribute-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 40px rgba(0, 255, 136, 0.5);
+        }
+
+        .contribute-star {
+            margin-top: 30px;
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+        }
+
+        /* Mobile responsive for contribution section */
+        @media (max-width: 768px) {
+            .contribute-section {
+                padding: 30px 20px;
+                border-radius: 18px;
+            }
+
+            .contribute-heading {
+                font-size: 24px;
+            }
+
+            .contribute-intro {
+                font-size: 15px;
+            }
+
+            .contribute-card {
+                padding: 18px;
+                border-radius: 15px;
+            }
+
+            .contribute-card h3 {
+                font-size: 16px;
+            }
+
+            .contribute-card ol,
+            .contribute-card ul {
+                font-size: 14px;
+                margin-left: 15px;
+                line-height: 1.8;
+            }
+
+            .github-contribute-btn {
+                padding: 15px 25px;
+                font-size: 14px;
+                gap: 10px;
+                letter-spacing: 1px;
+            }
+
+            .github-contribute-btn svg {
+                width: 20px;
+                height: 20px;
+            }
+
+            .contribute-star {
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .contribute-section {
+                padding: 25px 15px;
+                border-radius: 15px;
+            }
+
+            .contribute-heading {
+                font-size: 20px;
+            }
+
+            .contribute-intro {
+                font-size: 13px;
+            }
+
+            .contribute-card {
+                padding: 15px;
+                border-radius: 12px;
+            }
+
+            .contribute-card h3 {
+                font-size: 14px;
+                margin-bottom: 10px;
+            }
+
+            .contribute-card ol,
+            .contribute-card ul {
+                font-size: 12px;
+                margin-left: 12px;
+                line-height: 1.7;
+            }
+
+            .github-contribute-btn {
+                padding: 12px 20px;
+                font-size: 11px;
+                gap: 8px;
+                letter-spacing: 1px;
+                border-width: 2px;
+            }
+
+            .github-contribute-btn svg {
+                width: 16px;
+                height: 16px;
+            }
+
+            .contribute-star {
+                font-size: 11px;
+                margin-top: 20px;
+            }
         }
     </style>
 </head>
@@ -1115,16 +1593,16 @@
         </section>
 
         <!-- Contribution Section -->
-        <section id="contribute-section" class="tutorial-section" style="background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 245, 255, 0.05)); border: 2px solid var(--neon-green); border-radius: 25px; text-align: center;">
-            <h2 style="font-size: 32px; margin-bottom: 20px;">🚀 Open for Contributions!</h2>
-            <p style="font-size: 18px; color: rgba(255,255,255,0.8); margin-bottom: 30px; max-width: 800px; margin-left: auto; margin-right: auto;">
+        <section id="contribute-section" class="tutorial-section contribute-section">
+            <h2 class="contribute-heading">🚀 Open for Contributions!</h2>
+            <p class="contribute-intro">
                 This project is <strong>open-source</strong> and we welcome contributions from developers of all skill levels! Whether you're fixing bugs, adding features, or improving documentation, your help is appreciated.
             </p>
             
-            <div style="display: flex; flex-direction: column; gap: 20px; max-width: 600px; margin: 30px auto;">
-                <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 20px; border: 1px solid rgba(0, 245, 255, 0.2); text-align: left; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(0, 245, 255, 0.3)'" onmouseout="this.style.transform=''; this.style.boxShadow=''">
-                    <h3 style="color: var(--neon-blue); font-size: 20px; margin-bottom: 15px; font-family: 'Orbitron', sans-serif;">📋 How to Contribute</h3>
-                    <ol style="margin-left: 20px; color: rgba(255,255,255,0.8); line-height: 2;">
+            <div class="contribute-cards">
+                <div class="contribute-card contribute-card-blue">
+                    <h3>📋 How to Contribute</h3>
+                    <ol>
                         <li><strong>Fork the repository</strong> on GitHub</li>
                         <li><strong>Clone</strong> your fork to your local machine</li>
                         <li><strong>Create a new branch</strong> for your feature or bug fix</li>
@@ -1135,9 +1613,9 @@
                     </ol>
                 </div>
 
-                <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 20px; border: 1px solid rgba(255, 0, 255, 0.2); text-align: left; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(255, 0, 255, 0.3)'" onmouseout="this.style.transform=''; this.style.boxShadow=''">
-                    <h3 style="color: var(--neon-pink); font-size: 20px; margin-bottom: 15px; font-family: 'Orbitron', sans-serif;">💡 Contribution Ideas</h3>
-                    <ul style="margin-left: 20px; color: rgba(255,255,255,0.8); line-height: 2;">
+                <div class="contribute-card contribute-card-pink">
+                    <h3>💡 Contribution Ideas</h3>
+                    <ul>
                         <li>Add new particle shapes or gestures</li>
                         <li>Improve performance optimization</li>
                         <li>Add mobile touch controls</li>
@@ -1149,21 +1627,14 @@
                 </div>
             </div>
 
-            <a href="https://github.com/shivaganesht/Realtime-3d-moving-model-AI" target="_blank" 
-               class="shimmer-btn"
-               style="display: inline-flex; align-items: center; gap: 15px; padding: 20px 40px; 
-                      background: linear-gradient(135deg, rgba(0, 255, 136, 0.3), rgba(0, 245, 255, 0.3));
-                      border: 3px solid var(--neon-green); border-radius: 18px; color: white; 
-                      text-decoration: none; font-family: 'Orbitron', sans-serif; font-size: 18px; 
-                      font-weight: 700; letter-spacing: 3px; margin-top: 30px;
-                      transition: all 0.3s ease; box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);">
+            <a href="https://github.com/shivaganesht/Realtime-3d-moving-model-AI" target="_blank" class="shimmer-btn github-contribute-btn">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
                 </svg>
                 CONTRIBUTE ON GITHUB
             </a>
 
-            <p style="margin-top: 30px; color: rgba(255,255,255,0.6); font-size: 14px;">
+            <p class="contribute-star">
                 ⭐ Don't forget to star the repository if you find this project useful!
             </p>
         </section>

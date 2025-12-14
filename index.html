@@ -2,9 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#0a0a0f">
+    <meta name="description" content="NEXUS - Interactive 3D Particle Universe controlled by hand gestures using Three.js and MediaPipe">
     <title>NEXUS • Interactive 3D Particle Universe</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌌</text></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌌</text></svg>">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -15,12 +21,14 @@
             --dark-bg: #0a0a0f;
             --glass-bg: rgba(10, 10, 20, 0.8);
             --border-glow: rgba(0, 245, 255, 0.3);
+            --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -28,6 +36,10 @@
             background: var(--dark-bg);
             font-family: 'Rajdhani', sans-serif;
             color: white;
+            touch-action: manipulation;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
         }
 
         /* Animated Background Grid */
@@ -648,40 +660,255 @@
         @media (max-width: 768px) {
             #controls {
                 top: auto;
-                bottom: 260px;
+                bottom: 220px;
                 left: 10px;
                 right: 10px;
                 max-width: none;
-                padding: 15px;
+                padding: 12px;
+                border-radius: 15px;
             }
+            
+            .panel-header {
+                margin-bottom: 12px;
+                padding-bottom: 10px;
+            }
+            
+            .panel-header h2 {
+                font-size: 11px;
+            }
+            
+            .control-group {
+                margin-bottom: 12px;
+            }
+            
+            .control-group label {
+                font-size: 8px;
+                margin-bottom: 6px;
+            }
+            
+            .btn-group {
+                gap: 5px;
+            }
+            
+            .btn {
+                padding: 8px 10px;
+                font-size: 10px;
+                border-radius: 8px;
+            }
+            
             #video-container {
-                width: 140px;
-                height: 105px;
-                bottom: 130px;
+                width: 120px;
+                height: 90px;
+                bottom: 110px;
                 right: 10px;
+                border-radius: 12px;
             }
+            
+            #video-container::before {
+                font-size: 7px;
+                top: 5px;
+            }
+            
             .header {
-                padding: 10px 15px;
+                padding: 8px 12px;
             }
+            
+            .logo-icon {
+                width: 35px;
+                height: 35px;
+                font-size: 18px;
+                border-radius: 8px;
+            }
+            
             .logo-text h1 {
-                font-size: 16px;
+                font-size: 14px;
+                letter-spacing: 1px;
             }
+            
+            .logo-text p {
+                font-size: 8px;
+                display: none;
+            }
+            
+            .logo {
+                gap: 8px;
+            }
+            
             .nav-links {
-                gap: 10px;
+                gap: 8px;
             }
+            
             .nav-link {
                 display: none;
             }
+            
+            .github-link {
+                padding: 6px 12px;
+                border-radius: 8px;
+                font-size: 11px;
+            }
+            
+            .github-link svg {
+                width: 16px;
+                height: 16px;
+            }
+            
             #status-bar {
                 left: 10px;
-                bottom: 80px;
-                max-width: calc(100% - 170px);
+                bottom: 60px;
+                max-width: calc(100% - 150px);
+                gap: 8px;
             }
+            
             .status-item {
-                padding: 8px 12px;
+                padding: 6px 10px;
+                border-radius: 8px;
             }
+            
             .status-text {
+                font-size: 8px;
+            }
+            
+            .status-indicator {
+                width: 8px;
+                height: 8px;
+            }
+            
+            .footer {
+                font-size: 8px;
+                bottom: 5px;
+            }
+            
+            #current-gesture {
+                font-size: 80px;
+            }
+            
+            #gesture-label {
+                font-size: 14px;
+                top: calc(50% + 60px);
+            }
+        }
+
+        @media (max-width: 480px) {
+            #controls {
+                bottom: 180px;
+                left: 8px;
+                right: 8px;
+                padding: 10px;
+            }
+            
+            .panel-header h2 {
+                font-size: 10px;
+            }
+            
+            .panel-icon {
+                font-size: 18px;
+            }
+            
+            .btn {
+                padding: 6px 8px;
                 font-size: 9px;
+            }
+            
+            #video-container {
+                width: 100px;
+                height: 75px;
+                bottom: 90px;
+                right: 8px;
+                border-radius: 10px;
+            }
+            
+            .header {
+                padding: 6px 10px;
+            }
+            
+            .logo-icon {
+                width: 30px;
+                height: 30px;
+                font-size: 16px;
+            }
+            
+            .logo-text h1 {
+                font-size: 12px;
+            }
+            
+            .github-link span {
+                display: none;
+            }
+            
+            .github-link {
+                padding: 6px 10px;
+            }
+            
+            #status-bar {
+                bottom: 45px;
+                max-width: calc(100% - 125px);
+            }
+            
+            .status-item {
+                padding: 5px 8px;
+            }
+            
+            .status-text {
+                font-size: 7px;
+                letter-spacing: 0;
+            }
+            
+            #current-gesture {
+                font-size: 60px;
+            }
+            
+            #gesture-label {
+                font-size: 12px;
+                top: calc(50% + 45px);
+            }
+            
+            .footer {
+                display: none;
+            }
+        }
+
+        /* Touch optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            .btn:active {
+                transform: scale(0.95);
+                background: linear-gradient(135deg, rgba(0, 245, 255, 0.4), rgba(191, 0, 255, 0.4));
+            }
+            
+            .github-link:active {
+                transform: scale(0.95);
+            }
+            
+            .nav-link:active {
+                transform: scale(0.95);
+            }
+        }
+
+        /* Landscape mode on mobile */
+        @media (max-height: 500px) and (orientation: landscape) {
+            #controls {
+                bottom: auto;
+                top: 70px;
+                left: 10px;
+                width: 280px;
+                max-height: calc(100vh - 100px);
+                overflow-y: auto;
+            }
+            
+            #video-container {
+                bottom: 10px;
+                right: 10px;
+                width: 140px;
+                height: 105px;
+            }
+            
+            #status-bar {
+                bottom: 10px;
+                left: 10px;
+            }
+            
+            .footer {
+                display: none;
             }
         }
 

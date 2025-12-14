@@ -24,6 +24,12 @@ class App {
         const container = document.getElementById('container');
         this.particleSystem = new ParticleSystem(container);
         
+        // Update particle count display for mobile
+        const particleCountEl = document.getElementById('particle-count');
+        if (particleCountEl) {
+            particleCountEl.textContent = this.particleSystem.particleCount;
+        }
+        
         // Setup UI controls
         this.setupControls();
         
@@ -50,9 +56,9 @@ class App {
         } catch (error) {
             console.error('Failed to initialize hand tracking:', error);
             document.getElementById('loading').innerHTML = `
-                <div style="text-align: center;">
-                    <p style="color: #ff4444; font-family: Orbitron; font-size: 18px; letter-spacing: 3px;">CAMERA ACCESS DENIED</p>
-                    <p style="margin-top: 20px; color: rgba(255,255,255,0.5);">Please allow camera access and refresh the page</p>
+                <div style="text-align: center; padding: 20px;">
+                    <p style="color: #ff4444; font-family: Orbitron; font-size: 16px; letter-spacing: 2px;">CAMERA ACCESS DENIED</p>
+                    <p style="margin-top: 20px; color: rgba(255,255,255,0.5); font-size: 14px;">Please allow camera access and refresh the page</p>
                 </div>
             `;
         }
