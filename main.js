@@ -1,7 +1,7 @@
 /**
  * NEXUS Main Application Controller
  * Integrates particle system with hand tracking gestures
- * @author Shiva
+ * @author Shiva Ganesh
  */
 
 class App {

@@ -1,7 +1,7 @@
 /**
  * Advanced Hand Tracking System using MediaPipe Hands
  * Enhanced gesture detection with improved accuracy
- * @author Shiva
+ * @author Shiva Ganesh
  */
 
 class HandTracker {

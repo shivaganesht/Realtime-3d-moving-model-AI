@@ -1,7 +1,7 @@
 /**
  * NEXUS Particle Engine v2.0
  * Advanced 3D Particle System with Dynamic Shape Morphing
- * @author Shiva
+ * @author Shiva Ganesh
  * @description Real-time interactive particle system with hand gesture control
  */
 

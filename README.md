@@ -138,7 +138,7 @@ MIT License - feel free to use, modify, and share!
 
 ## 🙏 Credits
 
-Created with ❤️ by [Shiva](https://github.com/shivaganesht)
+Created with ❤️ by [Shiva Ganesh](https://github.com/shivaganesht)
 
 Special thanks to:
 - Three.js team for the amazing 3D library
