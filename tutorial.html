@@ -139,13 +139,21 @@
             display: inline-block;
             margin-top: 30px;
             padding: 10px 25px;
-            background: linear-gradient(135deg, rgba(0, 245, 255, 0.2), rgba(191, 0, 255, 0.2));
+            background: linear-gradient(
+                135deg,
+                rgba(0, 245, 255, 0.2),
+                rgba(255, 0, 255, 0.2),
+                rgba(191, 0, 255, 0.2),
+                rgba(0, 245, 255, 0.2)
+            );
+            background-size: 300% 300%;
             border: 1px solid var(--border-glow);
             border-radius: 50px;
             font-family: 'Orbitron', sans-serif;
             font-size: 12px;
             letter-spacing: 2px;
             color: var(--neon-blue);
+            animation: gradientShift 4s ease infinite;
         }
 
         /* Main Content */
@@ -158,8 +166,12 @@
         /* Table of Contents */
         .toc {
             background: var(--card-bg);
-            border: 1px solid var(--border-glow);
-            border-radius: 20px;
+            border: 2px solid transparent;
+            background-image: linear-gradient(var(--card-bg), var(--card-bg)),
+                            linear-gradient(90deg, var(--neon-blue), var(--neon-pink), var(--neon-purple), var(--neon-blue));
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+            border-radius: 25px;
             padding: 30px;
             margin-bottom: 50px;
         }
@@ -188,13 +200,14 @@
             color: rgba(255,255,255,0.7);
             text-decoration: none;
             padding: 12px 15px;
-            border-radius: 10px;
+            border-radius: 12px;
             transition: all 0.3s ease;
         }
 
         .toc-list a:hover {
             background: rgba(0, 245, 255, 0.1);
             color: var(--neon-blue);
+            transform: translateX(5px);
         }
 
         .toc-number {
@@ -218,13 +231,34 @@
         .section h2 {
             font-family: 'Orbitron', sans-serif;
             font-size: 28px;
-            color: var(--neon-blue);
+            background: linear-gradient(
+                90deg,
+                var(--neon-blue),
+                var(--neon-pink),
+                var(--neon-purple),
+                var(--neon-green),
+                var(--neon-blue)
+            );
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-bottom: 25px;
             padding-bottom: 15px;
-            border-bottom: 2px solid var(--border-glow);
+            border-bottom: 2px solid transparent;
+            border-image: linear-gradient(
+                90deg,
+                var(--neon-blue),
+                var(--neon-pink),
+                var(--neon-purple),
+                var(--neon-green),
+                var(--neon-blue)
+            );
+            border-image-slice: 1;
             display: flex;
             align-items: center;
             gap: 15px;
+            animation: gradientShift 5s ease infinite;
         }
 
         .section h3 {
@@ -243,9 +277,15 @@
         .code-block {
             background: #0d0d15;
             border: 1px solid rgba(0, 245, 255, 0.2);
-            border-radius: 15px;
+            border-radius: 20px;
             margin: 20px 0;
             overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .code-block:hover {
+            border-color: var(--neon-blue);
+            box-shadow: 0 5px 20px rgba(0, 245, 255, 0.2);
         }
 
         .code-header {
@@ -295,9 +335,15 @@
         .info-box {
             background: var(--card-bg);
             border-left: 4px solid var(--neon-blue);
-            border-radius: 0 15px 15px 0;
+            border-radius: 0 20px 20px 0;
             padding: 20px 25px;
             margin: 25px 0;
+            transition: all 0.3s ease;
+        }
+
+        .info-box:hover {
+            transform: translateX(5px);
+            box-shadow: -5px 0 20px rgba(0, 245, 255, 0.2);
         }
 
         .info-box.tip {
@@ -332,15 +378,15 @@
         .feature-item {
             background: var(--card-bg);
             border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 15px;
+            border-radius: 20px;
             padding: 25px;
             transition: all 0.3s ease;
         }
 
         .feature-item:hover {
             border-color: var(--neon-blue);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0, 245, 255, 0.1);
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0, 245, 255, 0.2);
         }
 
         .feature-icon {
@@ -478,8 +524,101 @@
             }
         }
 
+        @keyframes shimmer {
+            0% {
+                background-position: -200% center;
+            }
+            100% {
+                background-position: 200% center;
+            }
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         .section {
             animation: fadeInUp 0.6s ease forwards;
+        }
+
+        /* Scroll to Contribute Button */
+        .scroll-contribute-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+            padding: 15px 35px;
+            background: linear-gradient(
+                90deg,
+                rgba(0, 255, 136, 0.3),
+                rgba(0, 245, 255, 0.3),
+                rgba(191, 0, 255, 0.3),
+                rgba(0, 255, 136, 0.3)
+            );
+            background-size: 200% 100%;
+            border: 2px solid var(--neon-green);
+            border-radius: 12px;
+            color: white;
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        .scroll-contribute-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -200%;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.4),
+                transparent
+            );
+            animation: shimmer 2.5s infinite;
+        }
+
+        .scroll-contribute-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 40px rgba(0, 255, 136, 0.5);
+            border-color: var(--neon-blue);
+        }
+
+        /* Shimmer Button for GitHub Contribute */
+        .shimmer-btn {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shimmer-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -200%;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.5),
+                transparent
+            );
+            animation: shimmer 2s infinite;
+        }
+
+        .shimmer-btn:hover::after {
+            animation: shimmer 1s infinite;
         }
     </style>
 </head>
@@ -497,9 +636,13 @@
     </header>
 
     <section class="hero">
-        <h1>🚀 Build Your Own NEXUS</h1>
+        <h1>Build Your Own NEXUS</h1>
         <p>A complete guide to creating a real-time 3D particle system with hand gesture control using Three.js and MediaPipe</p>
         <div class="hero-badge">📖 BEGINNER FRIENDLY TUTORIAL</div>
+        <br>
+        <button class="scroll-contribute-btn" onclick="document.getElementById('contribute-section').scrollIntoView({behavior: 'smooth', block: 'center'})">
+            💻 Want to Contribute?
+        </button>
     </section>
 
     <main class="main-content">
@@ -960,6 +1103,60 @@
                 <li>Add particle physics for realistic movement</li>
                 <li>Export particle positions to create 3D prints</li>
             </ul>
+        </section>
+
+        <!-- Contribution Section -->
+        <section id="contribute-section" class="tutorial-section" style="background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 245, 255, 0.05)); border: 2px solid var(--neon-green); border-radius: 25px; text-align: center;">
+            <h2 style="font-size: 32px; margin-bottom: 20px;">🚀 Open for Contributions!</h2>
+            <p style="font-size: 18px; color: rgba(255,255,255,0.8); margin-bottom: 30px; max-width: 800px; margin-left: auto; margin-right: auto;">
+                This project is <strong>open-source</strong> and we welcome contributions from developers of all skill levels! Whether you're fixing bugs, adding features, or improving documentation, your help is appreciated.
+            </p>
+            
+            <div style="display: flex; flex-direction: column; gap: 20px; max-width: 600px; margin: 30px auto;">
+                <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 20px; border: 1px solid rgba(0, 245, 255, 0.2); text-align: left; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(0, 245, 255, 0.3)'" onmouseout="this.style.transform=''; this.style.boxShadow=''">
+                    <h3 style="color: var(--neon-blue); font-size: 20px; margin-bottom: 15px; font-family: 'Orbitron', sans-serif;">📋 How to Contribute</h3>
+                    <ol style="margin-left: 20px; color: rgba(255,255,255,0.8); line-height: 2;">
+                        <li><strong>Fork the repository</strong> on GitHub</li>
+                        <li><strong>Clone</strong> your fork to your local machine</li>
+                        <li><strong>Create a new branch</strong> for your feature or bug fix</li>
+                        <li><strong>Make your changes</strong> and test them thoroughly</li>
+                        <li><strong>Commit</strong> your changes with clear, descriptive messages</li>
+                        <li><strong>Push</strong> your branch to your fork</li>
+                        <li><strong>Open a Pull Request</strong> with a detailed description</li>
+                    </ol>
+                </div>
+
+                <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 20px; border: 1px solid rgba(255, 0, 255, 0.2); text-align: left; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(255, 0, 255, 0.3)'" onmouseout="this.style.transform=''; this.style.boxShadow=''">
+                    <h3 style="color: var(--neon-pink); font-size: 20px; margin-bottom: 15px; font-family: 'Orbitron', sans-serif;">💡 Contribution Ideas</h3>
+                    <ul style="margin-left: 20px; color: rgba(255,255,255,0.8); line-height: 2;">
+                        <li>Add new particle shapes or gestures</li>
+                        <li>Improve performance optimization</li>
+                        <li>Add mobile touch controls</li>
+                        <li>Create more color themes</li>
+                        <li>Write additional tutorials</li>
+                        <li>Fix bugs or improve code quality</li>
+                        <li>Enhance UI/UX design</li>
+                    </ul>
+                </div>
+            </div>
+
+            <a href="https://github.com/shivaganesht/Realtime-3d-moving-model-AI" target="_blank" 
+               class="shimmer-btn"
+               style="display: inline-flex; align-items: center; gap: 15px; padding: 20px 40px; 
+                      background: linear-gradient(135deg, rgba(0, 255, 136, 0.3), rgba(0, 245, 255, 0.3));
+                      border: 3px solid var(--neon-green); border-radius: 18px; color: white; 
+                      text-decoration: none; font-family: 'Orbitron', sans-serif; font-size: 18px; 
+                      font-weight: 700; letter-spacing: 3px; margin-top: 30px;
+                      transition: all 0.3s ease; box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                </svg>
+                CONTRIBUTE ON GITHUB
+            </a>
+
+            <p style="margin-top: 30px; color: rgba(255,255,255,0.6); font-size: 14px;">
+                ⭐ Don't forget to star the repository if you find this project useful!
+            </p>
         </section>
     </main>
 
